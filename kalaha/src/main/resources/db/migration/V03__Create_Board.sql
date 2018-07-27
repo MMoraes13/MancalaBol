@@ -1,0 +1,5 @@
+CREATE TABLE board (
+	id BIGINT (20) PRIMARY KEY AUTO_INCREMENT,
+	game_id BIGINT (20) NOT NULL,
+	FOREIGN KEY (game_id) references game(id) 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
