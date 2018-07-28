@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bol.interviews.kalaha.model.Player;
-import com.bol.interviews.kalaha.repository.PlayerRepository;
 import com.bol.interviews.kalaha.service.PlayerService;
 
 @RestController

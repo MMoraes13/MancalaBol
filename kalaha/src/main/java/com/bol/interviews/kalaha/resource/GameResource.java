@@ -26,7 +26,6 @@ import com.bol.interviews.kalaha.service.BoardService;
 import com.bol.interviews.kalaha.service.GameService;
 import com.bol.interviews.kalaha.service.PitService;
 import com.bol.interviews.kalaha.service.PlayService;
-import com.bol.interviews.kalaha.service.PlayerService;
 
 @RestController
 @RequestMapping ("/game")
@@ -40,19 +39,14 @@ public class GameResource {
 	private BoardService boardService;
 	@Autowired
 	private PitService pitService;
-	@Autowired
-	private PlayerService playerService;
-	
-	
-	
 	@PostMapping(value="/create")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Game> createNewGame (@RequestBody Player pOne, HttpServletResponse response) {
-		Optional <Player> playerOne = playerService.findById(pOne.getId());
+		//Optional <Player> playerOne = playerService.findById(pOne.getId());
 		
 		Game createdGame;
 		Board board;
-		createdGame = gameService.createNewGame(playerOne.get(), playerOne.get());
+		createdGame = gameService.createNewGame(pOne, pOne);
 		board = boardService.createNewBoard(createdGame);
 		// PITS PLAYER ONE
 		for (int i = PlayService.PIT_0_PLAYER_ONE; i < PlayService.KALAHA_PLAYER_ONE; i++) {

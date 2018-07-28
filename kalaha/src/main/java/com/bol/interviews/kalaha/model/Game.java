@@ -50,6 +50,20 @@ public class Game implements Serializable {
 		isOver = false;
 		
 	}
+
+	
+	
+	public Game(Long id, Player playerOne, Player playerTwo, Player turnOfWithId, boolean isOver) {
+		super();
+		this.id = id;
+		this.playerOne = playerOne;
+		this.playerTwo = playerTwo;
+		this.turnOfWithId = turnOfWithId;
+		this.isOver = isOver;
+	}
+
+
+
 	public Game() {
 		super();
 	}
