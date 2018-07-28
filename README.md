@@ -17,7 +17,7 @@ Backend:
 
 Frontend:
 
-* AngularJS
+* Angular
 * HTML 5
 
 Tools:
