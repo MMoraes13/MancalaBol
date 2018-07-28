@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,8 @@ public class PlayerResource {
 	
 	@PostMapping(value="/create")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Player> createNewPlayer (@RequestBody Player player, HttpServletResponse response) {
+	public ResponseEntity<Player> createNewPlayer (@Valid @RequestBody Player player, HttpServletResponse response) {
+		
 		Player savedPlayer = playerService.createPlayer(player);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{playerId}")
 				.buildAndExpand(savedPlayer.getId()).toUri();

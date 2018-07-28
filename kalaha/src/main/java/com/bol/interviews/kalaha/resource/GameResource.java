@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,12 +22,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.bol.interviews.kalaha.model.Board;
 import com.bol.interviews.kalaha.model.Game;
 import com.bol.interviews.kalaha.model.Player;
-import com.bol.interviews.kalaha.repository.BoardRepository;
-import com.bol.interviews.kalaha.repository.GameRepository;
-import com.bol.interviews.kalaha.repository.PlayerRepository;
 import com.bol.interviews.kalaha.service.BoardService;
 import com.bol.interviews.kalaha.service.GameService;
 import com.bol.interviews.kalaha.service.PitService;
+import com.bol.interviews.kalaha.service.PlayService;
 import com.bol.interviews.kalaha.service.PlayerService;
 
 @RestController
@@ -34,8 +33,7 @@ import com.bol.interviews.kalaha.service.PlayerService;
 
 public class GameResource {
 	public static final Integer NUMBER_OF_STONES = 6;
-	public static final Integer MAX_POSITIONS_BOARD = 14;
-	
+	public static final Integer ZERO = 0;
 	@Autowired
 	private GameService gameService;
 	@Autowired
@@ -56,10 +54,19 @@ public class GameResource {
 		Board board;
 		createdGame = gameService.createNewGame(playerOne.get(), playerOne.get());
 		board = boardService.createNewBoard(createdGame);
-		
-		for (int i = 0; i < MAX_POSITIONS_BOARD; i++) {
+		// PITS PLAYER ONE
+		for (int i = PlayService.PIT_0_PLAYER_ONE; i < PlayService.KALAHA_PLAYER_ONE; i++) {
 			pitService.createNewPit(board, i, NUMBER_OF_STONES);
 		}
+		// KAHALA PLAYER ONE
+		pitService.createNewPit(board, PlayService.KALAHA_PLAYER_ONE, ZERO);
+		
+		// PITS PLAYER ONE
+		for (int i = PlayService.PIT_0_PLAYER_TWO; i < PlayService.KALAHA_PLAYER_TWO; i++) {
+			pitService.createNewPit(board, i, NUMBER_OF_STONES);
+		}
+		// KAHALA PLAYER ONE
+		pitService.createNewPit(board, PlayService.KALAHA_PLAYER_TWO, ZERO);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{gameId}")
 				.buildAndExpand (createdGame.getId()).toUri();
@@ -80,24 +87,27 @@ public class GameResource {
 		return ResponseEntity.notFound().build();	
 	}
 	
-	@RequestMapping(value="/join/{gameId}/{playerId}",  method=RequestMethod.GET)
+	@PatchMapping(value="/join/{gameId}")
 	@ResponseBody
-	public ResponseEntity<Game> joinGame (@PathVariable Long gameId, @PathVariable Long playerId) {
+	public ResponseEntity<Game> joinGame (@PathVariable Long gameId, @RequestBody Player player) {
 		Optional<Game> game = gameService.findById(gameId);		
-		Optional<Player> player = playerService.findById(playerId);
-		
-		if (!game.isPresent()) return ResponseEntity.notFound().build();
-		if (!player.isPresent()) return ResponseEntity.notFound().build();
-		if (!game.get().getPlayerOne().equals(game.get().getPlayerTwo()))
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); //if game is already full
-		
-		
-		Game savedGame = gameService.joinGame(game.get());
-		savedGame.setPlayerTwo(player.get());
-		
-		return ResponseEntity.ok(gameService.joinGame(savedGame));
+		ResponseEntity <Game> answer = validateJoin(game);
+		if (answer == null) {
+			Game savedGame = game.get();
+			savedGame.setPlayerTwo(player);	
+			
+			return ResponseEntity.ok(gameService.joinGame(savedGame));
+		}
+		return answer;
 		
 	}
 
+	private ResponseEntity <Game> validateJoin (Optional<Game> game) {
+		if (!game.isPresent()) return ResponseEntity.notFound().build();		
+		if (!game.get().getPlayerOne().equals(game.get().getPlayerTwo()))
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); //if game is already full
+		
+		return null;
+	}
 	
 }

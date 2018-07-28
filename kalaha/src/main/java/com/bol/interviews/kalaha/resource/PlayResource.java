@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bol.interviews.kalaha.repository.BoardRepository;
 import com.bol.interviews.kalaha.repository.GameRepository;
 import com.bol.interviews.kalaha.repository.PlayerRepository;
+import com.bol.interviews.kalaha.service.PlayService;
 import com.bol.interviews.kalaha.model.Board;
 import com.bol.interviews.kalaha.model.Game;
 import com.bol.interviews.kalaha.model.Player;
@@ -28,20 +29,28 @@ public class PlayResource {
 	@Autowired
 	private BoardRepository boardRepository;
 	
+	@Autowired
+	private PlayService playService;
+	
 	
 	@RequestMapping(value="/{gameId}/{playerId}/{position}", method = RequestMethod.POST)
-	public ResponseEntity<Optional<Board>> movePlay (@PathVariable Long gameId, @PathVariable Long playerId, @PathVariable Long position) {
+	public ResponseEntity<Board> movePlay (@PathVariable Long gameId, @PathVariable Long playerId, @PathVariable Integer position) {
 		Optional<Player> player = playerRepository.findById(playerId);
-		if (player.isPresent())  {
-			Optional<Game> game = gameRepository.findById(gameId);
-			if (game.isPresent()) {
-				Optional <Board> board = boardRepository.findByGame(game.get());
+		Optional<Game> game = gameRepository.findById(gameId);
+		Optional <Board> board = boardRepository.findByGame(game.get());
+		Board resultBoard;
+		if (player.isPresent() && game.isPresent() && board.isPresent())  {
+			if (!playService.checkGameOver(board.get())) {
+				if (game.get().getPlayerOne().equals(game.get().getTurnOfWithId()) && position < PlayService.PIT_0_PLAYER_ONE && position >= PlayService.KALAHA_PLAYER_ONE)
+					return ResponseEntity.badRequest().build();
+				else if (game.get().getPlayerTwo().equals(game.get().getTurnOfWithId()) && position < PlayService.PIT_0_PLAYER_TWO && position >= PlayService.KALAHA_PLAYER_TWO)
+					return ResponseEntity.badRequest().build();
 				
-				return ResponseEntity.ok(board);
-			}
+				resultBoard = playService.movePlay(board.get(), player.get(), position);
+				return ResponseEntity.ok(resultBoard);
+			}			
 		}
-		return ResponseEntity.notFound().build();	
-		
+		return ResponseEntity.badRequest().build();
 	}
 }
 

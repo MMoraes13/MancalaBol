@@ -31,9 +31,9 @@ public class PitService {
 			else  {
 				toMergePit.get().setValue(newValue);
 			}
-			return pitRepository.save(toMergePit.get());
+			
 		}
-		else return null;
+		return pitRepository.save(toMergePit.get());
 	}
 	
 	public Pit updatePitIncrement (Board board, Integer position) {
@@ -42,9 +42,9 @@ public class PitService {
 			int pitValue = toMergePit.get().getValue();
 			pitValue++;
 			toMergePit.get().setValue(pitValue);
-			return pitRepository.save(toMergePit.get());
+			
 		}
-		else return null; 
+		return pitRepository.save(toMergePit.get());
 	}
 	
 	public Pit updatePitStealPit (Board board, Integer positionReceiving, Integer positionGiving) {
@@ -56,6 +56,11 @@ public class PitService {
 			updatePitNumberOfStones(board, positionGiving, 0, false);
 		}
 		return newPit;
+	}
+
+	public int getPitNumberOfStonesByBoardAndPosition(Board board, int i) {
+		int value =pitRepository.findByBoardAndPosition (board, i).get().getValue(); 
+		return value;
 	}
 	
 

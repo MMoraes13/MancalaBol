@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bol.interviews.kalaha.model.Game;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table (name = "board")
@@ -25,6 +26,7 @@ public class Board {
 	
 	@OneToOne
 	@JoinColumn (name = "game_id")
+	@JsonBackReference
 	private Game game;
 	
 	@OneToMany (mappedBy = "board")
