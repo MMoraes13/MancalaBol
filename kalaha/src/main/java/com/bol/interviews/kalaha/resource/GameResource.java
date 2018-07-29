@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import com.bol.interviews.kalaha.model.Board;
 import com.bol.interviews.kalaha.model.Game;
@@ -39,6 +40,11 @@ public class GameResource {
 	private BoardService boardService;
 	@Autowired
 	private PitService pitService;
+	@Autowired
+	private SimpMessagingTemplate simpMessagingTemplate;
+	
+	
+	
 	@PostMapping(value="/create")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Game> createNewGame (@RequestBody Player pOne, HttpServletResponse response) {
@@ -89,9 +95,10 @@ public class GameResource {
 		if (answer == null) {
 			Game savedGame = game.get();
 			savedGame.setPlayerTwo(player);	
-			
+			simpMessagingTemplate.convertAndSend("/join/"+savedGame.getId(), "refresh");
 			return ResponseEntity.ok(gameService.joinGame(savedGame));
 		}
+		
 		return answer;
 		
 	}
