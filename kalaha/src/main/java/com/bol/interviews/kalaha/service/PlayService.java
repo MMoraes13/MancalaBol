@@ -77,8 +77,7 @@ public class PlayService {
 			checkCapture (board, position);
 			gameService.changeTurn(board.getGame());
 		} 
-		if (checkGameOver(board)) 
-			gameService.finishGame(board.getGame());
+
 		return position;
 		
 	}
@@ -91,6 +90,10 @@ public class PlayService {
 					pitService.updatePitStealPit(board, position, KALAHA_PLAYER_ONE + position);
 				}
 			}
+	}
+
+	public void finishGame(Game game) {
+		gameService.finishGame(game);
 	}
 		
 	

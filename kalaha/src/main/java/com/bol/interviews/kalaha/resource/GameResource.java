@@ -1,12 +1,14 @@
 package com.bol.interviews.kalaha.resource;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,9 +70,11 @@ public class GameResource {
 		// KAHALA PLAYER ONE
 		pitService.createNewPit(board, PlayService.KALAHA_PLAYER_TWO, ZERO);
 		
+		simpMessagingTemplate.convertAndSend("/update/lobby", "update");
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{gameId}")
 				.buildAndExpand (createdGame.getId()).toUri();
 		response.setHeader("Location", uri.toASCIIString());
+		
 		
 		return ResponseEntity.created(uri).body(createdGame);	
 		
@@ -95,13 +99,26 @@ public class GameResource {
 		if (answer == null) {
 			Game savedGame = game.get();
 			savedGame.setPlayerTwo(player);	
-			simpMessagingTemplate.convertAndSend("/join/"+savedGame.getId(), "refresh");
+			simpMessagingTemplate.convertAndSend("/update/joined/"+savedGame.getId(), "joined");
+			simpMessagingTemplate.convertAndSend("/update/gameslist/", "update");
 			return ResponseEntity.ok(gameService.joinGame(savedGame));
 		}
 		
 		return answer;
 		
 	}
+	
+    @RequestMapping(value = "/gameslist", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Game> getGamesToJoin() {
+        return gameService.getGamesToJoin();
+    }
+    
+    
+    @RequestMapping(value = "/player/{player}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Game> getPlayerGames(Player player) {
+    	List<Game> games = gameService.getPlayerGames(player);
+        return games;
+    }
 
 	private ResponseEntity <Game> validateJoin (Optional<Game> game) {
 		if (!game.isPresent()) return ResponseEntity.notFound().build();		

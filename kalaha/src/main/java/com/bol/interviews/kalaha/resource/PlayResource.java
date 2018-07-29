@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,9 +29,13 @@ public class PlayResource {
 	
 	@Autowired
 	private BoardRepository boardRepository;
-	
+
 	@Autowired
 	private PlayService playService;
+	
+	@Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
+	
 	
 	
 	@RequestMapping(value="/{gameId}/{playerId}/{position}", method = RequestMethod.POST)
@@ -47,6 +52,12 @@ public class PlayResource {
 					return ResponseEntity.badRequest().build();
 				
 				resultBoard = playService.movePlay(board.get(), player.get(), position);
+				simpMessagingTemplate.convertAndSend("/update/game/"+resultBoard.getGame().getId(), "moved");
+				if (playService.checkGameOver(board.get())) {
+					playService.finishGame(board.get().getGame());
+					simpMessagingTemplate.convertAndSend("/update/gameslist/"+resultBoard.getGame(), "update");
+				}
+				
 				return ResponseEntity.ok(resultBoard);
 			}			
 		}

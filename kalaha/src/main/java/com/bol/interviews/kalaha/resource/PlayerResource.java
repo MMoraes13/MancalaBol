@@ -30,7 +30,6 @@ public class PlayerResource {
 	@Autowired
 	private PlayerService playerService;
 	
-	
 	@RequestMapping(value="/{playerId}", method=RequestMethod.GET)	
 	@ResponseBody
 	public ResponseEntity<Optional<Player>> findPlayer (@PathVariable Long playerId) {

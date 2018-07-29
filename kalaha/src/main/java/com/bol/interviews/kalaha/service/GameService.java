@@ -1,6 +1,8 @@
 package com.bol.interviews.kalaha.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,21 @@ public class GameService {
 		game.setOver(true);
 		return gameRepository.save(game);
 			
+	}
+
+	public List<Game> getGamesToJoin() {
+	    return gameRepository.findAll()
+                .stream().filter(
+                        game -> (((!game.isOver()) && game.getPlayerOne().equals(game.getPlayerTwo()))) 
+                ).collect(Collectors.toList());		
+		
+	}
+
+	public List<Game> getPlayerGames(Player player) {
+		List <Game> gamesAsPlayerOne = gameRepository.findByPlayerOne (player);
+		List <Game> gamesAsPlayerTwo = gameRepository.findByPlayerTwo (player);
+		gamesAsPlayerOne.addAll(gamesAsPlayerTwo);
+		return gamesAsPlayerOne;		
 	}
 
 }

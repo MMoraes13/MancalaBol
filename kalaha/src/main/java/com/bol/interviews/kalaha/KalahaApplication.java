@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class KalahaApplication {
 
-    @GetMapping("/game")
-    public String getIndex() {
-        return "index";
-    }
+	@GetMapping("/app")
+	public String getIndex() {
+		return "index";
+	}
 
 }
-
