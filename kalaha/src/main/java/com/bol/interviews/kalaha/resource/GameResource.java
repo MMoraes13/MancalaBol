@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,6 @@ import com.bol.interviews.kalaha.service.PlayService;
 
 @RestController
 @RequestMapping ("/game")
-
 public class GameResource {
 	public static final Integer NUMBER_OF_STONES = 6;
 	public static final Integer ZERO = 0;
@@ -49,6 +49,7 @@ public class GameResource {
 	
 	@PostMapping(value="/create")
 	@ResponseStatus(HttpStatus.CREATED)
+	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<Game> createNewGame (@RequestBody Player pOne, HttpServletResponse response) {
 		//Optional <Player> playerOne = playerService.findById(pOne.getId());
 		
@@ -83,6 +84,7 @@ public class GameResource {
 	
 	@RequestMapping(value="/{gameId}", method=RequestMethod.GET)	
 	@ResponseBody
+	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<Optional<Game>> findGame (@PathVariable Long gameId) {
 		Optional<Game> game = gameService.findById(gameId);	
 		if (game.isPresent()) {
@@ -93,6 +95,7 @@ public class GameResource {
 	
 	@PatchMapping(value="/join/{gameId}")
 	@ResponseBody
+	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<Game> joinGame (@PathVariable Long gameId, @RequestBody Player player) {
 		Optional<Game> game = gameService.findById(gameId);		
 		ResponseEntity <Game> answer = validateJoin(game);
@@ -107,13 +110,14 @@ public class GameResource {
 		return answer;
 		
 	}
-	
+	@CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/gameslist", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Game> getGamesToJoin() {
-        return gameService.getGamesToJoin();
+		List <Game> games = gameService.getGamesToJoin();
+        return games;
     }
     
-    
+	@CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/player/{player}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Game> getPlayerGames(Player player) {
     	List<Game> games = gameService.getPlayerGames(player);

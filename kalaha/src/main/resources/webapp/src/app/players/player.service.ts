@@ -12,7 +12,7 @@ export class PlayerService {
   }
 
   getAll(): Observable<any> {
-    return this.http.get('//localhost:8080/players');
+    return this.http.get(this.PLAYERS_API);
   }
   get(id : number) : Observable<any> {
   	return this.http.get(this.API+'/player/'+id);
