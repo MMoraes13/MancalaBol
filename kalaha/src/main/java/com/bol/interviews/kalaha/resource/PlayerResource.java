@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,13 +25,13 @@ import com.bol.interviews.kalaha.service.PlayerService;
 
 @RestController
 @RequestMapping ("/player")
-
 public class PlayerResource {
 	
 	@Autowired
 	private PlayerService playerService;
 	
 	@RequestMapping(value="/{playerId}", method=RequestMethod.GET)	
+	@CrossOrigin(origins = "http://localhost:4200")
 	@ResponseBody
 	public ResponseEntity<Optional<Player>> findPlayer (@PathVariable Long playerId) {
 		Optional<Player> player = playerService.findById(playerId);	
@@ -42,6 +43,7 @@ public class PlayerResource {
 	
 	@PostMapping(value="/create")
 	@ResponseStatus(HttpStatus.CREATED)
+	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<Player> createNewPlayer (@Valid @RequestBody Player player, HttpServletResponse response) {
 		
 		Player savedPlayer = playerService.createPlayer(player);

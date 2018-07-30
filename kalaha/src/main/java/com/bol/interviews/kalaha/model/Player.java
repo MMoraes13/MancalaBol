@@ -29,6 +29,9 @@ public class Player implements Serializable {
 	@Size(min = 3, max = 50)
     private String name;
     
+	@NotNull
+	private String password;
+	
     public Player () {
     	
     }
@@ -56,6 +59,15 @@ public class Player implements Serializable {
 	public Long getId() {
         return id;
     }
+	
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	@Override
 	public int hashCode() {
