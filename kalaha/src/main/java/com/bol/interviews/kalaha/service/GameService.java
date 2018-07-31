@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.bol.interviews.kalaha.model.Game;
 import com.bol.interviews.kalaha.model.Player;
 import com.bol.interviews.kalaha.repository.GameRepository;
@@ -49,13 +48,13 @@ public class GameService {
 		return gameRepository.save(game);
 			
 	}
-
+	
 	public List<Game> getGamesToJoin() {
-	    return gameRepository.findAll()
+	    List<Game> games = gameRepository.findAll()
                 .stream().filter(
                         game -> (((!game.isOver()) && game.getPlayerOne().equals(game.getPlayerTwo()))) 
                 ).collect(Collectors.toList());		
-		
+	    return games;
 	}
 
 	public List<Game> getPlayerGames(Player player) {

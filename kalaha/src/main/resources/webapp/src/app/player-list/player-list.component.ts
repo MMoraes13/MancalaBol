@@ -14,7 +14,7 @@ export class PlayerListComponent {
   constructor(private playerService: PlayerService) { }
 
   ngOnInit() {
-  this.playerService.getAll().subscribe(data => {
+  this.playerService.getAll().then(data => {
   	this.players = data;
   	});
   }

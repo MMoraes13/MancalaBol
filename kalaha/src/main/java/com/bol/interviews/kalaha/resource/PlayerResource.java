@@ -47,10 +47,9 @@ public class PlayerResource {
 	public ResponseEntity<Player> createNewPlayer (@Valid @RequestBody Player player, HttpServletResponse response) {
 		
 		Player savedPlayer = playerService.createPlayer(player);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{playerId}")
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{player}")
 				.buildAndExpand(savedPlayer.getId()).toUri();
 		response.setHeader("Location", uri.toASCIIString());
-		
 		return ResponseEntity.created(uri).body(savedPlayer);
 	}
 

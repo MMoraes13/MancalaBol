@@ -1,6 +1,17 @@
 <h2> Available games list </h2>
-<div *ngFor="let game of games">
-	{{game.id}}
+<form #gameForm="ngForm" (ngSubmit)="join(gameForm.value)">
+	<div *ngFor="let game of games">
+        <div>
+            <input type="radio" id="id" name="id" [(ngModel)]="game.id" checked value="{{game.id}}" #id/>
+           <label>vs {{game.playerOne.name}}</label>
+        </div>		
+		
+	</div>
+	<br/>
+	<input type="submit"value="Join selected" /> 
+	<br/> 
 
-	
-</div>
+</form>
+<form #newGameForm="ngForm" (ngSubmit)="create(newGameForm.value)">
+		<input type="submit"value="... or create a new one" />
+</form>	

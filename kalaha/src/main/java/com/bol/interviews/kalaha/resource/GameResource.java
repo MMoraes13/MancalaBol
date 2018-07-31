@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -110,8 +111,9 @@ public class GameResource {
 		return answer;
 		
 	}
+	@GetMapping
 	@CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping(value = "/gameslist", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
     public List<Game> getGamesToJoin() {
 		List <Game> games = gameService.getGamesToJoin();
         return games;
@@ -123,7 +125,7 @@ public class GameResource {
     	List<Game> games = gameService.getPlayerGames(player);
         return games;
     }
-
+	
 	private ResponseEntity <Game> validateJoin (Optional<Game> game) {
 		if (!game.isPresent()) return ResponseEntity.notFound().build();		
 		if (!game.get().getPlayerOne().equals(game.get().getPlayerTwo()))

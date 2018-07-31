@@ -11,11 +11,12 @@ import { PlayerEditComponent } from '../app/player-edit/player-edit.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { GameListComponent } from './game-list/game-list.component';
+import { GameCreateComponent } from './game-create/game-create.component';
 
 
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/player-list', pathMatch: 'full' },
+  { path: '', redirectTo: 'player-add', pathMatch: 'full' },
   {
     path: 'player-add',
     component: PlayerEditComponent
@@ -27,7 +28,23 @@ const appRoutes: Routes = [
   {
     path: 'game-list',
     component: GameListComponent
-  }
+  },
+  {
+    path: 'game-create',
+    component: GameCreateComponent
+  },
+  {
+    path: 'game-join/:id',
+    component: GameListComponent
+  },
+  {
+    path: 'game/:id',
+    component: GamePlayComponent
+  },
+  {
+    path: 'game/:id/:pit',
+    component: GamePlayComponent
+  }   
 ];
 
 @NgModule({
@@ -35,7 +52,8 @@ const appRoutes: Routes = [
     AppComponent,
     PlayerListComponent,
     PlayerEditComponent,
-    GameListComponent
+    GameListComponent,
+    GameCreateComponent
   ],
   imports: [
     BrowserModule,
