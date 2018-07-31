@@ -11,7 +11,7 @@ import { PlayerEditComponent } from '../app/player-edit/player-edit.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { GameListComponent } from './game-list/game-list.component';
-import { GameCreateComponent } from './game-create/game-create.component';
+import { GamePlayComponent } from './game-play/game-play.component';
 
 
 
@@ -28,10 +28,6 @@ const appRoutes: Routes = [
   {
     path: 'game-list',
     component: GameListComponent
-  },
-  {
-    path: 'game-create',
-    component: GameCreateComponent
   },
   {
     path: 'game-join/:id',
@@ -53,7 +49,7 @@ const appRoutes: Routes = [
     PlayerListComponent,
     PlayerEditComponent,
     GameListComponent,
-    GameCreateComponent
+    GamePlayComponent
   ],
   imports: [
     BrowserModule,

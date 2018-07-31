@@ -30,9 +30,9 @@ public class PlayService {
 
 	public Board movePlay (Board board, Player player, Integer position) {
 		
-		if (!checkGameOver(board) && isMyTurn(board.getGame(), player)) {
+		if (isMyTurn(board.getGame(), player)) {
 			sowPit (board, position);
-		}
+		} else return null;
 		return board;	
 		
 	}

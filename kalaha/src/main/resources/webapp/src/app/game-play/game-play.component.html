@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-6">
+
+        <div class="gameon">
+        	<input type="hidden" id="gameId" name="gameId" value="{{game.id}}" #gameId/>
+            <div class="row text-center">
+                <div class="col-md-2">
+                    <a class="btn btn-info btn-sq-lg" disabled>
+                        Player 02 - <strong>{{game.playerTwo.name}}</strong> - <strong>{{board.pits[13].value}}</strong>
+                    </a>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="row center-block">
+                       [<a (click)="move(gameId.value, 13);" class="btn btn-primary btn-sq-md" style="width: 80px;"> Pit 6 - <strong>{{board.pits[12].value}} </strong></a> }
+
+                        [<a (click)="move(gameId.value, 12);" class="btn btn-primary btn-sq-md" style="width: 80px;"> Pit 5 - <strong>{{board.pits[11].value}} </strong></a>]
+
+                        [<a (click)="move(gameId.value, 11);" class="btn btn-primary btn-sq-md" style="width: 80px;"> Pit 4 - <strong>{{board.pits[10].value}} </strong></a>]
+
+                        [<a (click)="move(gameId.value, 10);" class="btn btn-primary btn-sq-md" style="width: 80px;"> Pit 3- <strong>{{board.pits[9].value}} </strong></a>]
+
+                        [<a (click)="move(gameId.value, 9);" class="btn btn-primary btn-sq-md" style="width: 80px;"> Pit 2 - <strong>{{board.pits[8].value}} </strong></a>]
+
+                        [<a (click)="move(gameId.value, 8);" class="btn btn-primary btn-sq-md" style="width: 80px;"> Pit 1 - <strong>{{board.pits[7].value}} </strong></a>]
+                        
+                    </div>
+                    <br>
+                    <br/>
+                    <div class="row center-block">
+                        [<a (click)="move(gameId.value, 1);" class="btn btn-primary btn-sq-md" style="width: 80px;"> Pit 1 - <strong>{{board.pits[0].value}} </strong></a>]
+
+                        [<a (click)="move(gameId.value, 2);" class="btn btn-primary btn-sq-md" style="width: 80px;"> Pit 2 - <strong>{{board.pits[1].value}} </strong></a>]
+
+                        [<a (click)="move(gameId.value, 3);" class="btn btn-primary btn-sq-md" style="width: 80px;"> Pit 3 - <strong>{{board.pits[2].value}} </strong></a>]   
+
+                        [<a (click)="move(gameId.value, 4);" class="btn btn-primary btn-sq-md" style="width: 80px;"> Pit 4- <strong>{{board.pits[3].value}} </strong></a>]
+
+                        [<a (click)="move(gameId.value, 5);" class="btn btn-primary btn-sq-md" style="width: 80px;"> Pit 5 - <strong>{{board.pits[4].value}} </strong></a>]
+
+                        [<a (click)="move(gameId.value, 6);" class="btn btn-primary btn-sq-md" style="width: 80px;"> Pit 6 - <strong>{{board.pits[5].value}}</strong> </a>]
+                        
+                    </div>
+                </div>
+
+                <div class="col-md-2 centered">
+                    <a class="btn btn-info btn-sq-lg" disabled>
+                        Player 01 -<strong>{{game.playerOne.name}}</strong> -  <strong>{{board.pits[6].value}}</strong>
+                    </a>
+                </div>
+
+            </div>
+
+
+            <div class="row center-block" style="margin-left: 10px; margin-top: 20px;">
+                <p class="text-info" disabled>
+                    Turn: {{game.turnOfWithId.name}}
+                </p>
+            </div>
+            <div class="row center-block" style="margin-left: 10px; margin-top: 20px;">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

@@ -87,7 +87,8 @@ public class GameResource {
 	@ResponseBody
 	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<Optional<Game>> findGame (@PathVariable Long gameId) {
-		Optional<Game> game = gameService.findById(gameId);	
+		Optional<Game> game = gameService.findById(gameId);
+		
 		if (game.isPresent()) {
 			return ResponseEntity.ok(game);
 		}
