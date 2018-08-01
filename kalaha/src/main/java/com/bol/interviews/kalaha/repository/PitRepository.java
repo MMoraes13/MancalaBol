@@ -9,6 +9,6 @@ import com.bol.interviews.kalaha.model.Pit;
 
 public interface PitRepository extends JpaRepository <Pit, Long>{
 	
-	public Optional <Pit> findByBoardAndPosition (Board board, Integer position);
+	public Pit findByBoardAndPosition (Board board, Integer position);
 
 }

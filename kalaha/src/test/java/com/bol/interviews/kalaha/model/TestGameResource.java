@@ -81,7 +81,7 @@ public class TestGameResource {
 		ObjectMapper objMapper = new ObjectMapper ();
 		Player playerOne = new Player ("Mateus");
 		Player playerTwo = new Player ("Jan");
-		Long id = 100000L;
+		Long id = 1000000L;
 		Game game = new Game(id, playerOne, playerOne, playerOne, false);
 		
 		when(gameService.createNewGame(playerOne, playerOne)).thenReturn(game);

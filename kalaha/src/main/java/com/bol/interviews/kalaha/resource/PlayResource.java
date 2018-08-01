@@ -54,21 +54,19 @@ public class PlayResource {
 		Board resultBoard;
 		if (player.isPresent() && game.isPresent() && board.isPresent())  {
 			if (!playService.checkGameOver(board.get())) {
-				if (game.get().getPlayerOne().equals(game.get().getPlayerTwo())) return ResponseEntity.badRequest().build();
-				if (game.get().getPlayerOne().equals(game.get().getTurnOfWithId()) && position < PlayService.PIT_0_PLAYER_ONE && position >= PlayService.KALAHA_PLAYER_ONE)
-					return ResponseEntity.badRequest().build();
-				else if (game.get().getPlayerTwo().equals(game.get().getTurnOfWithId()) && position < PlayService.PIT_0_PLAYER_TWO && position >= PlayService.KALAHA_PLAYER_TWO)
-					return ResponseEntity.badRequest().build();
 				
-				resultBoard = playService.movePlay(board.get(), player.get(), position);
-				if (resultBoard == null) return ResponseEntity.badRequest().build();
-				simpMessagingTemplate.convertAndSend("/update/game/"+resultBoard.getGame().getId(), "moved");
-				if (playService.checkGameOver(board.get())) {
-					playService.finishGame(board.get().getGame());
-					simpMessagingTemplate.convertAndSend("/update/gameslist/"+resultBoard.getGame(), "update");
+				ResponseEntity <Board> response = validateMove(game.get(),board.get(), player.get(), position); 
+				if (response == null) {					
+					resultBoard = playService.movePlay(board.get(), player.get(), position);
+					if (resultBoard == null) return ResponseEntity.badRequest().build();
+					
+					if (playService.checkGameOver(board.get())) {
+						playService.finishGame(board.get().getGame());
+						
+					}
+					simpMessagingTemplate.convertAndSend("/update/game/", "update");
+					return ResponseEntity.ok(resultBoard);
 				}
-				
-				return ResponseEntity.ok(resultBoard);
 			}			
 		}
 		return ResponseEntity.badRequest().build();
@@ -84,5 +82,14 @@ public class PlayResource {
         // Return board
         return board;
     }	
+	
+	public ResponseEntity<Board> validateMove (Game game, Board board, Player player, Integer position) {
+		if (game.getPlayerOne().equals(game.getPlayerTwo())) return ResponseEntity.badRequest().build();
+		if (game.getPlayerOne().equals(game.getTurnOfWithId()) && (position < PlayService.PIT_0_PLAYER_ONE || position >= PlayService.KALAHA_PLAYER_ONE))
+			return ResponseEntity.badRequest().build();
+		else if (game.getPlayerTwo().equals(game.getTurnOfWithId()) && (position < PlayService.PIT_0_PLAYER_TWO || position >= PlayService.KALAHA_PLAYER_TWO))
+			return ResponseEntity.badRequest().build();
+		return null;
+	}
 }
 

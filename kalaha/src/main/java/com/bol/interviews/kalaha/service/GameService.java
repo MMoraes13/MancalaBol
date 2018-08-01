@@ -51,7 +51,7 @@ public class GameService {
 	}
 
 	public Game joinGame(Game game) {
-		Game result = createNewGame(game.getPlayerOne(), game.getPlayerTwo());
+		Game result = saveGame(game);
 		return result;
 	}
 

@@ -23,16 +23,16 @@ export class GameService {
   }
   getAllAvailableGames(): Promise <any> {
   	return this.http.get(this.GAME_GET_ALL_AVAILABLE_GAMES).toPromise()
-    .then(response => response);
+    .then(response => response, error=>console.error(error));
   }
 
   get(id : number) : Promise<any> {
   	return this.http.get(this.GAME_API+"/"+id)
-    .toPromise().then(response => response);
+    .toPromise().then(response => response, error=>console.error(error));
   }
   getBoard (id : number) : Promise<any> {
     return this.http.get(this.GAME_GET_BOARD+"/"+id)
-    .toPromise().then(response=>response);
+    .toPromise().then(response=>response, error=>console.error(error));
   }
   save (player : any) : Promise<any> {
     let result: Promise<Object>;
@@ -42,11 +42,12 @@ export class GameService {
   }
 
   join (game : any) : Promise <any> {
-    
+    if (game.id)
     return this.http.patch(this.GAME_JOIN+"/"+game.id, 
              {"id":localStorage.getItem ("currentUser")}
-             ).toPromise().then(response => response, error => console.error(error));
-    
+             ).toPromise()
+        .then(response => response, error => console.error(error));
+    else alert("game undefined");
   }
  play (game: any, pit : any) : Promise <any> {
     return this.http.post(this.PLAY_API+"/"+game+"/"+localStorage.getItem("currentUser")+"/"+pit, {})

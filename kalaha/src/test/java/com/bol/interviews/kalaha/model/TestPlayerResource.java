@@ -1,14 +1,10 @@
 package com.bol.interviews.kalaha.model;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -73,9 +68,7 @@ public class TestPlayerResource {
 
 	@Test	
 	public void testFindPlayer () throws JsonProcessingException, Exception  {
-		ObjectMapper objMapper = new ObjectMapper();
 		Player player = new Player ();
-		Player player2 = new Player ("Mateus Fernandez", "test");
 		mockMvc.perform (get ("/player/"+player.getId())
 				.accept(MediaType.APPLICATION_JSON))
 		.andExpect(status().isBadRequest());

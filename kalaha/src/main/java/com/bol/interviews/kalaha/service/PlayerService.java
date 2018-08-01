@@ -2,13 +2,15 @@ package com.bol.interviews.kalaha.service;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.test.web.servlet.MockMvc;
 
 import com.bol.interviews.kalaha.model.Player;
 import com.bol.interviews.kalaha.repository.PlayerRepository;
 @Service
+@Transactional
 public class PlayerService {
 	
 	
@@ -19,8 +21,8 @@ public class PlayerService {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public PlayerService(MockMvc mockMvc) {
-		// TODO Auto-generated constructor stub
+	public PlayerService(PlayerRepository playerRepoository) {
+		this.playerRepository = playerRepoository;
 	}
 
 	public Player createPlayer (Player player) {		
