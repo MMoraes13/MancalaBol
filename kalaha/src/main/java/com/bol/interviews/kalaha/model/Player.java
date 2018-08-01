@@ -69,6 +69,12 @@ public class Player implements Serializable {
 		this.password = password;
 	}
 
+	public Player(@NotNull @Size(min = 3, max = 50) String name, @NotNull String password) {
+		super();
+		this.name = name;
+		this.password = password;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

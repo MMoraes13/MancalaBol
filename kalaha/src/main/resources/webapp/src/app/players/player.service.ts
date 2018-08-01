@@ -13,17 +13,20 @@ export class PlayerService {
   }
 
   getAll(): Promise<any> {
-    return this.http.get(this.PLAYERS_API).toPromise().then(response => response);
+    return this.http.get(this.PLAYERS_API).toPromise()
+    .then(response => response, error => console.error(error));
+
   }
   
   get(id : number) : Promise<any> {
-  	return this.http.get(this.API+'/player/'+id).toPromise().then(response => response);
+  	return this.http.get(this.API+'/player/'+id).toPromise()
+    .then(response => response, error => console.error(error));
   }
   save (player : any): Promise<any> {
     
     return this.http.post(this.PLAYER_CREATE_API, player)
     .toPromise()
-    .then(response => response);
+    .then(response => response, error => console.error(error));
 
   }
 

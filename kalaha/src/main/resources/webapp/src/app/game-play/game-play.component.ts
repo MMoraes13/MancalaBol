@@ -40,8 +40,9 @@ export class GamePlayComponent implements OnInit {
     });  	
   }
 
-  move (game :number, pit : number) {
+  move (game :any, pit : number) {
     console.log(game);
+     
     this.gameService.play (game, pit);
   }
 }

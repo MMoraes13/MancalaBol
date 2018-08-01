@@ -6,10 +6,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.bol.interviews.kalaha.model.Game;
 import com.bol.interviews.kalaha.model.Player;
 import com.bol.interviews.kalaha.repository.GameRepository;
 @Service
+@Transactional
 public class GameService {
 
 	
@@ -20,8 +23,17 @@ public class GameService {
 
 	}
 	
+	
+	public GameService(GameRepository gameRepository) {
+		this.gameRepository = gameRepository;
+	}
+
+
+
 	public Game createNewGame (Player playerOne, Player playerTwo) {		
-		return gameRepository.save(new Game(playerOne, playerTwo)); 
+		Game game = new Game (playerOne, playerTwo);
+		gameRepository.save(game);
+		return game;
 	}
 
 	public Optional<Game> findById(Long gameId) {
@@ -35,17 +47,18 @@ public class GameService {
 			game.setTurnOfWithId(game.getPlayerOne());		
 		
 		
-		return gameRepository.save(game);
+		return game;
 	}
 
 	public Game joinGame(Game game) {
-
-		return gameRepository.save(game);
+		Game result = createNewGame(game.getPlayerOne(), game.getPlayerTwo());
+		return result;
 	}
 
 	public Game finishGame(Game game) {
 		game.setOver(true);
-		return gameRepository.save(game);
+		Game result = gameRepository.save(game);
+		return result;
 			
 	}
 	
@@ -62,6 +75,13 @@ public class GameService {
 		List <Game> gamesAsPlayerTwo = gameRepository.findByPlayerTwo (player);
 		gamesAsPlayerOne.addAll(gamesAsPlayerTwo);
 		return gamesAsPlayerOne;		
+	}
+
+
+	public Game saveGame(Game game) {
+		Game result = gameRepository.save(game);
+		return result;
+		
 	}
 
 }

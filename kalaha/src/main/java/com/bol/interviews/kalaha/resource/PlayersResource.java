@@ -10,20 +10,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bol.interviews.kalaha.model.Player;
 import com.bol.interviews.kalaha.repository.PlayerRepository;
+import com.bol.interviews.kalaha.service.PlayerService;
+import com.bol.interviews.kalaha.service.PlayersService;
 
 @RestController
 @RequestMapping ("/players")
 
-
 public class PlayersResource {
 	
 	@Autowired
-	private PlayerRepository playerRepository;
+	private PlayersService playersService;
 	
-	@GetMapping
-	@CrossOrigin(origins = "http://localhost:4200")
-	public List <Player> listAllPlayers () {
-		return playerRepository.findAll();
+	
+	
+	
+	public PlayersResource(PlayersService playersService) {
+		super();
+		this.playersService = playersService;
 	}
 
+
+
+
+	@GetMapping 
+	@CrossOrigin(origins = "http://localhost:4200")
+	public List <Player> listAllPlayers () {
+		return playersService.findAll();
+	}
+
+	
 }

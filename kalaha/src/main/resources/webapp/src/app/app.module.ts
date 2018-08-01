@@ -12,9 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { GameListComponent } from './game-list/game-list.component';
 import { GamePlayComponent } from './game-play/game-play.component';
-
-
-
 const appRoutes: Routes = [
   { path: '', redirectTo: 'player-add', pathMatch: 'full' },
   {
@@ -50,6 +47,7 @@ const appRoutes: Routes = [
     PlayerEditComponent,
     GameListComponent,
     GamePlayComponent
+
   ],
   imports: [
     BrowserModule,

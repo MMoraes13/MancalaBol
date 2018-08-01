@@ -12,7 +12,8 @@ export class PlayService {
 
 
   play (game: any, pit : any) : Promise <any> {
-    return this.http.post(this.PLAY+"/"+game.id+"/"+pit, {}).toPromise().then(response => response);
+    return this.http.post(this.PLAY+"/"+game.id+"/"+pit, {})
+    .toPromise().then(response => response, error => console.error(error));
   }
 
 

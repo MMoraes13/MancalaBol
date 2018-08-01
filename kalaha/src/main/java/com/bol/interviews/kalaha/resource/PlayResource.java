@@ -54,6 +54,7 @@ public class PlayResource {
 		Board resultBoard;
 		if (player.isPresent() && game.isPresent() && board.isPresent())  {
 			if (!playService.checkGameOver(board.get())) {
+				if (game.get().getPlayerOne().equals(game.get().getPlayerTwo())) return ResponseEntity.badRequest().build();
 				if (game.get().getPlayerOne().equals(game.get().getTurnOfWithId()) && position < PlayService.PIT_0_PLAYER_ONE && position >= PlayService.KALAHA_PLAYER_ONE)
 					return ResponseEntity.badRequest().build();
 				else if (game.get().getPlayerTwo().equals(game.get().getTurnOfWithId()) && position < PlayService.PIT_0_PLAYER_TWO && position >= PlayService.KALAHA_PLAYER_TWO)

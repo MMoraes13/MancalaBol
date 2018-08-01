@@ -43,11 +43,10 @@ public class GameResource {
 	private BoardService boardService;
 	@Autowired
 	private PitService pitService;
-	@Autowired
+	/*@Autowired
 	private SimpMessagingTemplate simpMessagingTemplate;
 	
-	
-	
+	*/
 	@PostMapping(value="/create")
 	@ResponseStatus(HttpStatus.CREATED)
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -72,7 +71,7 @@ public class GameResource {
 		// KAHALA PLAYER ONE
 		pitService.createNewPit(board, PlayService.KALAHA_PLAYER_TWO, ZERO);
 		
-		simpMessagingTemplate.convertAndSend("/update/lobby", "update");
+		//simpMessagingTemplate.convertAndSend("/update/lobby", "update");
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{gameId}")
 				.buildAndExpand (createdGame.getId()).toUri();
 		response.setHeader("Location", uri.toASCIIString());
@@ -104,13 +103,12 @@ public class GameResource {
 		if (answer == null) {
 			Game savedGame = game.get();
 			savedGame.setPlayerTwo(player);	
-			simpMessagingTemplate.convertAndSend("/update/joined/"+savedGame.getId(), "joined");
-			simpMessagingTemplate.convertAndSend("/update/gameslist/", "update");
+			/*simpMessagingTemplate.convertAndSend("/update/joined/"+savedGame.getId(), "joined");
+			simpMessagingTemplate.convertAndSend("/update/gameslist/", "update");*/
 			return ResponseEntity.ok(gameService.joinGame(savedGame));
 		}
 		
-		return answer;
-		
+		return answer;		
 	}
 	@GetMapping
 	@CrossOrigin(origins = "http://localhost:4200")

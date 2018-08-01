@@ -22,18 +22,22 @@ export class GameService {
     return this.http.get(this.GAME_API).toPromise().then(response => response);
   }
   getAllAvailableGames(): Promise <any> {
-  	return this.http.get(this.GAME_GET_ALL_AVAILABLE_GAMES).toPromise().then(response => response);
+  	return this.http.get(this.GAME_GET_ALL_AVAILABLE_GAMES).toPromise()
+    .then(response => response);
   }
 
   get(id : number) : Promise<any> {
-  	return this.http.get(this.GAME_API+"/"+id).toPromise().then(response => response);
+  	return this.http.get(this.GAME_API+"/"+id)
+    .toPromise().then(response => response);
   }
   getBoard (id : number) : Promise<any> {
-    return this.http.get(this.GAME_GET_BOARD+"/"+id).toPromise().then(response=>response);
+    return this.http.get(this.GAME_GET_BOARD+"/"+id)
+    .toPromise().then(response=>response);
   }
   save (player : any) : Promise<any> {
     let result: Promise<Object>;
-    result = this.http.post(this.GAME_CREATE_API, {"id":localStorage.getItem ("currentUser")}).toPromise().then(response => response);
+    result = this.http.post(this.GAME_CREATE_API, {"id":localStorage.getItem ("currentUser")})
+    .toPromise().then(response => response);
     return result;
   }
 
@@ -41,11 +45,12 @@ export class GameService {
     
     return this.http.patch(this.GAME_JOIN+"/"+game.id, 
              {"id":localStorage.getItem ("currentUser")}
-             ).toPromise().then(response => response);
+             ).toPromise().then(response => response, error => console.error(error));
     
   }
  play (game: any, pit : any) : Promise <any> {
-    return this.http.post(this.PLAY_API+"/"+game+"/"+localStorage.getItem("currentUser")+"/"+pit, {}).toPromise().then(response => response);
+    return this.http.post(this.PLAY_API+"/"+game+"/"+localStorage.getItem("currentUser")+"/"+pit, {})
+    .toPromise().then(response => response, error => console.error(error));
   }
 
 

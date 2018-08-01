@@ -75,7 +75,7 @@ public class PlayService {
 		}
 		if (position != KALAHA_PLAYER_ONE && position != KALAHA_PLAYER_TWO) { 		
 			checkCapture (board, position);
-			gameService.changeTurn(board.getGame());
+			gameService.saveGame(gameService.changeTurn(board.getGame()));
 		} 
 
 		return position;
