@@ -2,12 +2,14 @@ package com.bol.interviews.kalaha.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bol.interviews.kalaha.model.Board;
 import com.bol.interviews.kalaha.model.Pit;
 import com.bol.interviews.kalaha.repository.PitRepository;
 
 @Service
+@Transactional
 public class PitService {
 
 	@Autowired
@@ -36,8 +38,8 @@ public class PitService {
 			toMergePit.setValue(newValue);
 		}
 
-		Pit result = pitRepository.save(toMergePit);
-		return result;
+		pitRepository.save(toMergePit);
+		return toMergePit;
 	}
 	public Pit updatePitNumberOfStones(Pit toMergePit, Integer newValue, boolean isToSum) {
 	    if (isToSum) {
@@ -46,8 +48,8 @@ public class PitService {
 			toMergePit.setValue(newValue);
 		}
 
-		Pit result = pitRepository.save(toMergePit);
-		return result;
+		pitRepository.save(toMergePit);
+		return toMergePit;
 	}	
 
 	public Pit updatePitIncrement(Board board, Integer position) {
@@ -57,8 +59,8 @@ public class PitService {
 		pitValue++;
 		toMergePit.setValue(pitValue);
 
-		Pit result = pitRepository.save(toMergePit);
-		return result;
+		pitRepository.save(toMergePit);
+		return toMergePit;
 	}
 
 	public Pit updatePitStealPit(Board board, Integer positionReceiving, Integer positionGiving) {

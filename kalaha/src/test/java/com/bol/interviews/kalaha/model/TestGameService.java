@@ -60,17 +60,14 @@ public class TestGameService {
 		assertEquals(game.getTurnOfWithId(), playerOneMock);
 		game = gameService.changeTurn(game);
 		assertEquals(game.getTurnOfWithId(), playerTwoMock);
+		
+		assertEquals(game.getTurnOfWithId(), playerTwoMock);
+		game = gameService.changeTurn(game);
+		assertEquals(game.getTurnOfWithId(), playerOneMock);
 	}
 	@Test
 	public void testJoinGame () {
-		Player playerOneMock = mock (Player.class);
-		Player playerTwoMock = mock (Player.class);		
-		
-		Game gameToJoin = gameService.createNewGame(playerOneMock, playerOneMock);
-		assertNotEquals(gameToJoin.getPlayerTwo(), playerTwoMock);
-		gameToJoin.setPlayerTwo(playerTwoMock);
-		Game result = gameService.joinGame(gameToJoin);
-		assertEquals(result.getPlayerTwo(), playerTwoMock);
+
 	}
 	@Test
 	public void testFinishGame () {
