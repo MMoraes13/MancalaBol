@@ -21,6 +21,7 @@ import com.bol.interviews.kalaha.repository.PlayerRepository;
 import com.bol.interviews.kalaha.service.BoardService;
 import com.bol.interviews.kalaha.service.GameService;
 import com.bol.interviews.kalaha.service.PlayService;
+import com.bol.interviews.kalaha.config.WebSocketResource;
 import com.bol.interviews.kalaha.model.Board;
 import com.bol.interviews.kalaha.model.Game;
 import com.bol.interviews.kalaha.model.Player;
@@ -41,7 +42,7 @@ public class PlayResource {
 	private PlayService playService;
 	
 	@Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
+    private WebSocketResource webSocketResource;
 	
 	
 	
@@ -62,9 +63,9 @@ public class PlayResource {
 					
 					if (playService.checkGameOver(board.get())) {
 						playService.finishGame(board.get().getGame());
-						
-					}
-					simpMessagingTemplate.convertAndSend("/update/game/", "update");
+						webSocketResource.publishWebSocket("end");
+					} else 
+						webSocketResource.publishWebSocket("update");
 					return ResponseEntity.ok(resultBoard);
 				}
 			}			

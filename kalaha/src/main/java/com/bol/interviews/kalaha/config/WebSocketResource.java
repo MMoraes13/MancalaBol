@@ -1,4 +1,4 @@
-package com.bol.interviews.kalaha.resource;
+package com.bol.interviews.kalaha.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class WebSocketResource {
 	
+	@Autowired
 	private final SimpMessagingTemplate template;
 	
 	@Autowired
@@ -24,6 +25,9 @@ public class WebSocketResource {
 		this.template.convertAndSend( "/game",message);
 	}
     
+    public void publishWebSocket(String data){
+        template.convertAndSend("/update", data);
+    }
 
 
 }

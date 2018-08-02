@@ -51,7 +51,7 @@ export class GameService {
   }
  play (game: any, pit : any) : Promise <any> {
     return this.http.post(this.PLAY_API+"/"+game+"/"+localStorage.getItem("currentUser")+"/"+pit, {})
-    .toPromise().then(response => response, error => console.error(error));
+    .toPromise().then(response => response, error => alert("Not allowed. Is this your turn?"));
   }
 
 

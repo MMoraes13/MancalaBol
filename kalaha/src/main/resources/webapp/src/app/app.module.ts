@@ -12,6 +12,12 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { GameListComponent } from './game-list/game-list.component';
 import { GamePlayComponent } from './game-play/game-play.component';
+
+import { StompConfig, StompService } from '@stomp/ng2-stompjs';
+import { stompConfig } from './ws/stomp.config';
+
+
+
 const appRoutes: Routes = [
   { path: '', redirectTo: 'player-add', pathMatch: 'full' },
   {
@@ -55,7 +61,16 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [PlayerService, GameService],
+  providers: [PlayerService, 
+            GameService, 
+            PlayerService, 
+            StompService,
+              {
+                provide: StompConfig,
+                useValue: stompConfig
+
+              }
+              ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

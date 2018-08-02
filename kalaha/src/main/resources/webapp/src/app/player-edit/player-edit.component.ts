@@ -39,6 +39,7 @@ export class PlayerEditComponent implements OnInit {
   save(form: NgForm) {
       this.playerService.save(form).then(player => {
         localStorage.setItem("currentUser" ,player.id);
+        
         this.gotoGameList();
       });
   }
