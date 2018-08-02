@@ -1,4 +1,4 @@
-package com.bol.interviews.kalaha.model;
+package com;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -12,11 +12,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.bol.interviews.kalaha.model.Board;
+import com.bol.interviews.kalaha.model.Pit;
 import com.bol.interviews.kalaha.repository.PitRepository;
 import com.bol.interviews.kalaha.service.PitService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TestPitService {
+public class PitServiceTest {
 
 	@Mock
 	private PitRepository pitRepositoryMock;
@@ -118,6 +120,6 @@ public class TestPitService {
 	
 	@Test
 	public void testPit () {
-		PitService pit = new PitService();
+		new PitService();
 	}
 }

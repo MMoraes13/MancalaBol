@@ -1,4 +1,4 @@
-package com.bol.interviews.kalaha.model;
+package com;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -12,9 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.bol.interviews.kalaha.Kalaha;
+import com.bol.interviews.kalaha.model.Player;
 import com.bol.interviews.kalaha.resource.PlayerResource;
 import com.bol.interviews.kalaha.service.BoardService;
 import com.bol.interviews.kalaha.service.GameService;
@@ -26,28 +29,29 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(PlayerResource.class)
-public class TestPlayerResource {
+@ContextConfiguration(classes={Kalaha.class})
+public class PlayerResourceTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
 	
-    @MockBean
-    private GameService gameService;
+	@MockBean
+	private GameService gameService;
 
-    @MockBean
-    private BoardService boardService;
+	@MockBean
+	private BoardService boardService;
 
-    @MockBean
-    private PlayerService playerService;
+	@MockBean
+	private PlayerService playerService;
 
-    @MockBean
-    private PitService pitService;
+	@MockBean
+	private PitService pitService;
 
-    @MockBean
-    private PlayService playService;
+	@MockBean
+	private PlayService playService;
 
   
-	public TestPlayerResource() {
+	public PlayerResourceTest() {
 		// TODO Auto-generated constructor stub
 	}
 	@Test	
@@ -63,7 +67,6 @@ public class TestPlayerResource {
 				.accept(MediaType.APPLICATION_JSON))
 		.andExpect(status().isCreated());
 
-		
 	}
 
 	@Test	

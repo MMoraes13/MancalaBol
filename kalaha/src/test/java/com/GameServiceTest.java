@@ -1,28 +1,26 @@
-package com.bol.interviews.kalaha.model;
+package com;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
+import com.bol.interviews.kalaha.model.Game;
+import com.bol.interviews.kalaha.model.Player;
 import com.bol.interviews.kalaha.repository.GameRepository;
 import com.bol.interviews.kalaha.service.GameService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TestGameService {
+public class GameServiceTest {
 	@Mock
     private GameRepository gameRepositoryMock;
     
@@ -33,7 +31,7 @@ public class TestGameService {
 		gameService = new GameService(gameRepositoryMock);
 	}
     
-	public TestGameService() {
+	public GameServiceTest() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -64,10 +62,25 @@ public class TestGameService {
 		assertEquals(game.getTurnOfWithId(), playerTwoMock);
 		game = gameService.changeTurn(game);
 		assertEquals(game.getTurnOfWithId(), playerOneMock);
+		
+	}
+	@Test
+	public void testGamesToJoin () {
+		gameService.getGamesToJoin();
+
 	}
 	@Test
 	public void testJoinGame () {
-
+		Player playerOneMock = mock (Player.class);
+		Player playerTwoMock = mock (Player.class);
+		
+		Game game = new Game (playerOneMock, playerOneMock);
+		assertEquals (game.getPlayerOne(), game.getPlayerTwo());
+		game.setPlayerTwo(playerTwoMock);
+		gameService.joinGame(game);
+		assertNotEquals (game.getPlayerOne(), game.getPlayerTwo());
+		verify(gameRepositoryMock, times(1)).save(game);
+		
 	}
 	@Test
 	public void testFinishGame () {
@@ -82,6 +95,16 @@ public class TestGameService {
 		
 		assertTrue (game.isOver());
 		
+		verify(gameRepositoryMock, times(2)).save(game);
+		
+	}	
+	@Test
+	public void testGetPlayerGames () {
+		Player playerOneMock = mock (Player.class);
+		gameService.getPlayerGames(playerOneMock);
+		
+		verify(gameRepositoryMock, times(1)).findByPlayerOne(playerOneMock);
+		verify(gameRepositoryMock, times(1)).findByPlayerTwo(playerOneMock);
 	}
 	
 }

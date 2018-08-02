@@ -18,8 +18,14 @@ public class BoardService {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public BoardService(BoardRepository boardRepositoryMock) {
+		this.boardRepository = boardRepositoryMock;
+	}
+
 	public Board createNewBoard (Game game) {
-		return boardRepository.save(new Board (game));
+		Board board = new Board (game);
+		boardRepository.save(board);
+		return board;
 		
 	}
 	public Optional <Board> getBoardById (Long id) {

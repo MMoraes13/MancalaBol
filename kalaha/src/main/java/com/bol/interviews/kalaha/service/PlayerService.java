@@ -26,7 +26,9 @@ public class PlayerService {
 	}
 
 	public Player createPlayer (Player player) {		
-		return playerRepository.save(player);
+		playerRepository.save(player);
+		return player;
+		
 	}
 	
 	public Optional<Player> findById (Long id) {

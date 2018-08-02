@@ -22,7 +22,7 @@ public class WebSocketResource {
 	
 	@MessageMapping("/refresh")
 	public void onReceivedMessage (String message) {
-		this.template.convertAndSend( "/game",message);
+		this.template.convertAndSend("/game", message);
 	}
     
     public void publishWebSocket(String data){
