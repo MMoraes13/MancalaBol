@@ -1,6 +1,3 @@
-INSERT INTO game (player_one_id, player_two_id, turn_of_with_id, is_over) VALUES (1, 2, 1, false);
-
-
 CREATE TABLE pit (
 	id BIGINT (20) PRIMARY KEY AUTO_INCREMENT, 
 	board_id BIGINT (20) NOT NULL,
