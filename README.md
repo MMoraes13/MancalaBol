@@ -53,7 +53,7 @@ Tools:
 
 ## Improvements
 
-* Improve test coverage: according to EclEmma, the test average was about 50% of the code.
+* Improve test coverage: according to EclEmma, the test coverage was about 50% of the code.
 * Implement websocket for game-list so it doesn't need to be refreshed.
 * A functional login system instead of storing the current user at the browser localstorage.
 * Frontend design definetely needs to be improved.
