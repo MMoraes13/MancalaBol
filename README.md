@@ -56,6 +56,6 @@ Tools:
 * Improve test coverage: according to EclEmma, the test coverage was about 50% of the code.
 * Implement websocket for game-list so it doesn't need to be refreshed.
 * A functional login system instead of storing the current user at the browser localstorage.
-* Frontend design definetely needs to be improved.
+* Frontend design definitely needs to be improved.
 * New functionality: a chat system.
 * New functionality: a ranking system.
